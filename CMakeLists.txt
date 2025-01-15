@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.26)
 
 # CREATE PROJECT
-project(ImNodeFlow)
+project( ImNodeFlow
+         VERSION 0.1.0
+         DESCRIPTION "ImNodeFlow"
+         LANGUAGES CXX C
+)
 
 add_compile_definitions(IMGUI_DEFINE_MATH_OPERATORS)
 
@@ -12,11 +16,11 @@ file(GLOB_RECURSE _SRCS "src/*.cpp" "src/*.h" "src/*.inl")
 # CREATE LIBRARY FROM SOURCE_FILES
 add_library(ImNodeFlow ${_SRCS} ${_HDRS})
 
-# FIND DEPENDENCIES
-find_package(imgui)
+# FETCH DEPENDENCIES
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-# LINK CONAN LIBS
-target_link_libraries(ImNodeFlow imgui::imgui)
+include(FetchContent)
+include(imgui)
 
 # PREP TO USE "#include <>"
 target_include_directories(ImNodeFlow PUBLIC include)
