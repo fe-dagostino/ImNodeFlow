@@ -8,5 +8,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(ImGui)
 
-add_library(ImGui   INTERFACE )
-
+if (NOT TARGET ImGui)
+  add_library(ImGui   INTERFACE )
+endif()

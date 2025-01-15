@@ -20,10 +20,7 @@ add_library(ImNodeFlow ${_SRCS} ${_HDRS})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 include(FetchContent)
-if (NOT TARGET imgui)
-  include(imgui)
-endif() 
-
+include(imgui)
 
 # PREP TO USE "#include <>"
 target_include_directories(ImNodeFlow PRIVATE ${imgui_SOURCE_DIR} 
