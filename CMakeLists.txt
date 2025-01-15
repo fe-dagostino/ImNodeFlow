@@ -23,4 +23,10 @@ include(FetchContent)
 include(imgui)
 
 # PREP TO USE "#include <>"
-target_include_directories(ImNodeFlow PUBLIC include)
+target_include_directories(ImNodeFlow PRIVATE ${imgui_SOURCE_DIR} 
+                                              ${PROJECT_SOURCE_DIR}/include 
+                                              ${PROJECT_SOURCE_DIR}/src 
+                          )
+target_include_directories(ImNodeFlow PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+target_link_libraries( ImNodeFlow  imgui)

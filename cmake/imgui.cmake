@@ -8,5 +8,5 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(ImGui)
 
-add_library( ImGui   INTERFACE  )
-include_directories( ${imgui_SOURCE_DIR} )
+add_library(ImGui   INTERFACE )
+
