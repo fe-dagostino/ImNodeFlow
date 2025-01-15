@@ -29,4 +29,4 @@ target_include_directories(ImNodeFlow PRIVATE ${imgui_SOURCE_DIR}
                           )
 target_include_directories(ImNodeFlow PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-target_link_libraries( ImNodeFlow  imgui)
+target_link_libraries( ImNodeFlow PRIVATE imgui)
