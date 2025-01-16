@@ -18,25 +18,10 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include(FetchContent)
 include(imgui)
 
-include_directories( ${imgui_SOURCE_DIR} ${imnodeflow_SOURCE_DIR}/include ${imnodeflow_SOURCE_DIR}/src )
-
 # CREATE LIBRARY FROM SOURCE_FILES
 add_library(ImNodeFlow ${_SRCS} ${_HDRS})
 
-# PREP TO USE "#include <>"
-target_include_directories(ImNodeFlow PRIVATE ${imgui_SOURCE_DIR} 
-                                              ${PROJECT_SOURCE_DIR}/include 
-                                              ${PROJECT_SOURCE_DIR}/src 
-                          )
-target_include_directories(ImNodeFlow PUBLIC ${PROJECT_SOURCE_DIR}/include)
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src )
 
-target_link_libraries( ImNodeFlow PRIVATE ImGui)
+message( INFO " EXPORT ImNodeFlow SRC DIR: [${CMAKE_CURRENT_SOURCE_DIR}]" )
 
-
-if(hasParent)
-  message( INFO " EXPORT ImNodeFlow SRC DIR: [${imnodeflow_SOURCE_DIR}]" )
-  message( INFO " EXPORT ImNodeFlow BIN DIR: [${imnodeflow_BINARY_DIR}]" )
-  # make both ${imnodeflow_SOURCE_DIR} and ${imnodeflow_BINARY_DIR} visible at parent scope.
-  set( imnodeflow_SOURCE_DIR ${imnodeflow_SOURCE_DIR} PARENT_SCOPE )
-  set( imnodeflow_BINARY_DIR ${imnodeflow_BINARY_DIR} PARENT_SCOPE )
-endif(hasParent)
