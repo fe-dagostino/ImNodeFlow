@@ -22,6 +22,3 @@ include(imgui)
 add_library(ImNodeFlow ${_SRCS} ${_HDRS})
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src )
-
-message( INFO " EXPORT ImNodeFlow SRC DIR: [${CMAKE_CURRENT_SOURCE_DIR}]" )
-
