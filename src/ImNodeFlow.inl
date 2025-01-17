@@ -261,7 +261,7 @@ namespace ImFlow
         draw_list->AddRect(m_pos - m_style->extra.padding, m_pos + m_size + m_style->extra.padding, m_style->extra.border_color, m_style->extra.bg_radius, 0, m_style->extra.border_thickness);
     }
 
-    inline void Pin::update()
+    inline void Pin::update() noexcept
     {
         // Custom rendering
         if (m_renderer)

@@ -916,6 +916,8 @@ namespace ImFlow
     class Pin
     {
     public:
+        /***/
+        Pin() = delete;
         /**
          * @brief <BR>Generic pin constructor
          * @param name Name of the pin
@@ -925,20 +927,23 @@ namespace ImFlow
          * @param inf Pointer to the Grid Handler the pin is in (same as parent)
          * @param style Style of the pin
          */
-        explicit Pin(PinUID uid, std::string name, std::shared_ptr<PinStyle> style, PinType kind, BaseNode* parent, ImNodeFlow** inf)
-            :m_uid(uid), m_name(std::move(name)), m_style(std::move(style)), m_type(kind), m_parent(parent), m_inf(inf)
-            {
-                if(!m_style)
-                    m_style = PinStyle::cyan();
-            }
-
+        explicit Pin(PinUID uid, std::string name, std::shared_ptr<PinStyle> style, PinType kind, BaseNode* parent, ImNodeFlow** inf) noexcept
+          : m_uid(uid), m_name(std::move(name)), m_style(std::move(style)), 
+            m_pos(0.f, 0.f), m_size(0.f, 0.f), m_type(kind), m_parent(parent), 
+            m_inf(inf), m_renderer(nullptr)
+        {
+            if(!m_style)
+                m_style = PinStyle::cyan();
+        }
+        
+        /***/
         virtual ~Pin() = default;
 
         /**
          * @brief <BR>Main loop of the pin
          * @details Updates position, hovering and dragging status, and renders the pin. Must be called each frame.
          */
-        void update();
+        void update() noexcept;
 
         /**
          * @brief <BR>Draw default pin's socket
@@ -971,7 +976,7 @@ namespace ImFlow
          * @brief <BR>Set the reference to a link
          * @param link Smart pointer to the link
          */
-        virtual void setLink(std::shared_ptr<Link>& link) {}
+        virtual void setLink( [[maybe_unused]] std::shared_ptr<Link>& link) {}
 
         /**
          * @brief <BR>Delete link reference
@@ -1000,13 +1005,13 @@ namespace ImFlow
          * @brief <BR>Get pin's name
          * @return Const reference to pin's name
          */
-        const std::string& getName() { return m_name; }
+        constexpr const std::string& getName() { return m_name; }
 
         /**
          * @brief <BR>Get pin's position
          * @return Const reference to pin's position in grid coordinates
          */
-        [[nodiscard]] const ImVec2& getPos() { return m_pos; }
+        [[nodiscard]] constexpr const ImVec2& getPos() { return m_pos; }
 
         /**
          * @brief <BR>Get pin's hit-box size
@@ -1056,14 +1061,14 @@ namespace ImFlow
          */
         void setPos(ImVec2 pos) { m_pos = pos; }
     protected:
-        PinUID m_uid;
-        std::string m_name;
-        ImVec2 m_pos = ImVec2(0.f, 0.f);
-        ImVec2 m_size = ImVec2(0.f, 0.f);
-        PinType m_type;
-        BaseNode* m_parent = nullptr;
-        ImNodeFlow** m_inf;
-        std::shared_ptr<PinStyle> m_style;
+        PinUID                      m_uid;
+        std::string                 m_name;
+        std::shared_ptr<PinStyle>   m_style;
+        ImVec2                      m_pos;
+        ImVec2                      m_size;
+        PinType                     m_type;
+        BaseNode*                   m_parent;
+        ImNodeFlow**                m_inf;
         std::function<void(Pin* p)> m_renderer;
     };
 
@@ -1073,9 +1078,9 @@ namespace ImFlow
     class ConnectionFilter
     {
     public:
-        static std::function<bool(Pin*, Pin*)> None() { return [](Pin* out, Pin* in){ return true; }; }
-        static std::function<bool(Pin*, Pin*)> SameType() { return [](Pin* out, Pin* in) { return out->getDataType() == in->getDataType(); }; }
-        static std::function<bool(Pin*, Pin*)> Numbers() { return [](Pin* out, Pin* in){ return out->getDataType() == typeid(double) || out->getDataType() == typeid(float) || out->getDataType() == typeid(int); }; }
+        static std::function<bool(Pin*, Pin*)> None()     { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in){ return true; }; }
+        static std::function<bool(Pin*, Pin*)> SameType() { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in){ return out->getDataType() == in->getDataType(); }; }
+        static std::function<bool(Pin*, Pin*)> Numbers()  { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in){ return out->getDataType() == typeid(double) || out->getDataType() == typeid(float) || out->getDataType() == typeid(int); }; }
     };
 
     /**
