@@ -4,7 +4,8 @@ namespace ImFlow {
     // -----------------------------------------------------------------------------------------------------------------
     // LINK
 
-    void Link::update() {
+    void Link::update() noexcept(true) 
+    {
         ImVec2 start = m_left->pinPoint();
         ImVec2 end = m_right->pinPoint();
         float thickness = m_left->getStyle()->extra.link_thickness;
@@ -31,21 +32,24 @@ namespace ImFlow {
             m_right->deleteLink();
     }
 
-    Link::~Link() {
+    Link::~Link() noexcept(true)
+    {
         m_left->deleteLink();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     // BASE NODE
 
-    bool BaseNode::isHovered() {
+    bool BaseNode::isHovered() noexcept(true)
+    {
         ImVec2 paddingTL = {m_style->padding.x, m_style->padding.y};
         ImVec2 paddingBR = {m_style->padding.z, m_style->padding.w};
         return ImGui::IsMouseHoveringRect(m_inf->grid2screen(m_pos - paddingTL),
                                           m_inf->grid2screen(m_pos + m_size + paddingBR));
     }
 
-    void BaseNode::update() {
+    void BaseNode::update() noexcept(true) 
+    {
         ImDrawList *draw_list = ImGui::GetWindowDrawList();
         ImGui::PushID(this);
         bool mouseClickState = m_inf->getSingleUseClick();
@@ -209,41 +213,43 @@ namespace ImFlow {
 
     int ImNodeFlow::m_instances = 0;
 
-    bool ImNodeFlow::on_selected_node() {
+    bool ImNodeFlow::on_selected_node() noexcept(true)
+    {
         return std::any_of(m_nodes.begin(), m_nodes.end(),
                            [](const auto &n) { return n.second->isSelected() && n.second->isHovered(); });
     }
 
-    bool ImNodeFlow::on_free_space() {
+    bool ImNodeFlow::on_free_space() noexcept(true) 
+    {
         return std::all_of(m_nodes.begin(), m_nodes.end(),
                            [](const auto &n) { return !n.second->isHovered(); })
                && std::all_of(m_links.begin(), m_links.end(),
                               [](const auto &l) { return !l.lock()->isHovered(); });
     }
 
-    ImVec2 ImNodeFlow::screen2grid( const ImVec2 & p )
+    ImVec2 ImNodeFlow::screen2grid( const ImVec2 & p ) noexcept(true)
     {
         if ( ImGui::GetCurrentContext() == m_context.getRawContext() )
             return p - m_context.scroll();
         return ( p - m_context.origin() ) / m_context.scale() - m_context.scroll();
     }
 
-    ImVec2 ImNodeFlow::grid2screen( const ImVec2 & p )
+    ImVec2 ImNodeFlow::grid2screen( const ImVec2 & p ) noexcept(true)
     {
         if ( ImGui::GetCurrentContext() == m_context.getRawContext() )
             return p + m_context.scroll();
         return ( p + m_context.scroll() ) * m_context.scale() + m_context.origin();
     }
 
-    void ImNodeFlow::addLink(std::shared_ptr<Link> &link) {
-        m_links.push_back(link);
-    }
+    void ImNodeFlow::addLink(std::shared_ptr<Link> &link) noexcept(true)
+    {  m_links.push_back(link); }
 
-    void ImNodeFlow::update() {
+    void ImNodeFlow::update() noexcept(true)
+    {
         // Updating looping stuff
-        m_hovering = nullptr;
-        m_hoveredNode = nullptr;
-        m_draggingNode = m_draggingNodeNext;
+        m_hovering       = nullptr;
+        m_hoveredNode    = nullptr;
+        m_draggingNode   = m_draggingNodeNext;
         m_singleUseClick = ImGui::IsMouseClicked(ImGuiMouseButton_Left);
 
         // Create child canvas

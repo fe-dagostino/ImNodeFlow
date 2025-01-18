@@ -100,8 +100,11 @@ namespace ImFlow
     class PinStyle
     {
     public:
-        PinStyle(ImU32 color, int socket_shape, float socket_radius, float socket_hovered_radius, float socket_connected_radius, float socket_thickness)
-                :color(color), socket_shape(socket_shape), socket_radius(socket_radius), socket_hovered_radius(socket_hovered_radius), socket_connected_radius(socket_connected_radius),  socket_thickness(socket_thickness) {}
+        PinStyle() = delete;
+        
+        constexpr PinStyle(ImU32 color, int socket_shape, float socket_radius, float socket_hovered_radius, float socket_connected_radius, float socket_thickness) noexcept(true)
+                :color(color), socket_shape(socket_shape), socket_radius(socket_radius), socket_hovered_radius(socket_hovered_radius), socket_connected_radius(socket_connected_radius),  socket_thickness(socket_thickness) 
+        {}
 
         /// @brief Socket and link color
         ImU32 color;
@@ -119,17 +122,17 @@ namespace ImFlow
         PinStyleExtras extra;
     public:
         /// @brief <BR>Default cyan style
-        static std::shared_ptr<PinStyle> cyan() { return std::make_shared<PinStyle>(PinStyle(IM_COL32(87,155,185,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
+        static std::shared_ptr<PinStyle> cyan()  noexcept(true) { return std::make_shared<PinStyle>(PinStyle(IM_COL32(87,155,185,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
         /// @brief <BR>Default green style
-        static std::shared_ptr<PinStyle> green() { return std::make_shared<PinStyle>(PinStyle(IM_COL32(90,191,93,255), 4, 4.f, 4.67f, 4.2f, 1.3f)); }
+        static std::shared_ptr<PinStyle> green() noexcept(true) { return std::make_shared<PinStyle>(PinStyle(IM_COL32(90,191,93,255), 4, 4.f, 4.67f, 4.2f, 1.3f)); }
         /// @brief <BR>Default blue style
-        static std::shared_ptr<PinStyle> blue() { return std::make_shared<PinStyle>(PinStyle(IM_COL32(90,117,191,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
+        static std::shared_ptr<PinStyle> blue()  noexcept(true) { return std::make_shared<PinStyle>(PinStyle(IM_COL32(90,117,191,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
         /// @brief <BR>Default brown style
-        static std::shared_ptr<PinStyle> brown() { return std::make_shared<PinStyle>(PinStyle(IM_COL32(191,134,90,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
+        static std::shared_ptr<PinStyle> brown() noexcept(true) { return std::make_shared<PinStyle>(PinStyle(IM_COL32(191,134,90,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
         /// @brief <BR>Default red style
-        static std::shared_ptr<PinStyle> red() { return std::make_shared<PinStyle>(PinStyle(IM_COL32(191,90,90,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
+        static std::shared_ptr<PinStyle> red()   noexcept(true) { return std::make_shared<PinStyle>(PinStyle(IM_COL32(191,90,90,255), 0, 4.f, 4.67f, 3.7f, 1.f)); }
         /// @brief <BR>Default white style
-        static std::shared_ptr<PinStyle> white() { return std::make_shared<PinStyle>(PinStyle(IM_COL32(255,255,255,255), 5, 4.f, 4.67f, 4.2f, 1.f)); }
+        static std::shared_ptr<PinStyle> white() noexcept(true) { return std::make_shared<PinStyle>(PinStyle(IM_COL32(255,255,255,255), 5, 4.f, 4.67f, 4.2f, 1.f)); }
     };
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -143,36 +146,44 @@ namespace ImFlow
     class NodeStyle
     {
     public:
-        NodeStyle(ImU32 header_bg, ImColor header_title_color, float radius) :header_bg(header_bg), header_title_color(header_title_color), radius(radius) {}
+        /***/
+        NodeStyle() = delete;
+        /***/
+        constexpr NodeStyle(ImU32 header_bg, ImColor header_title_color, float radius) noexcept(true)
+          : bg(IM_COL32(55,64,75,255)), header_bg(header_bg), header_title_color(header_title_color), 
+            border_color( IM_COL32(30,38,41,140) ), border_selected_color(IM_COL32(170, 190, 205, 230)),
+            padding(13.7f, 6.f, 13.7f, 2.f), radius(radius), border_thickness(-1.35f),
+            border_selected_thickness(2.f)
+        {}
 
         /// @brief Body's background color
-        ImU32 bg = IM_COL32(55,64,75,255);
+        ImU32 bg;
         /// @brief Header's background color
         ImU32 header_bg;
         /// @brief Header title color
         ImColor header_title_color;
         /// @brief Border color
-        ImU32 border_color = IM_COL32(30,38,41,140);
+        ImU32 border_color;
         /// @brief Border color when selected
-        ImU32 border_selected_color = IM_COL32(170, 190, 205, 230);
+        ImU32 border_selected_color;
 
         /// @brief Body's content padding (Left Top Right Bottom)
-        ImVec4 padding = ImVec4(13.7f, 6.f, 13.7f, 2.f);
+        ImVec4 padding;
         /// @brief Edges rounding
         float radius;
         /// @brief Border thickness
-        float border_thickness = -1.35f;
+        float border_thickness;
         /// @brief Border thickness when selected
-        float border_selected_thickness = 2.f;
+        float border_selected_thickness;
     public:
         /// @brief <BR>Default cyan style
-        static std::shared_ptr<NodeStyle> cyan() { return std::make_shared<NodeStyle>(IM_COL32(71,142,173,255), ImColor(233,241,244,255), 6.5f); }
+        static std::shared_ptr<NodeStyle> cyan()  noexcept(true) { return std::make_shared<NodeStyle>(IM_COL32(71,142,173,255), ImColor(233,241,244,255), 6.5f); }
         /// @brief <BR>Default green style
-        static std::shared_ptr<NodeStyle> green() { return std::make_shared<NodeStyle>(IM_COL32(90,191,93,255), ImColor(233,241,244,255), 3.5f); }
+        static std::shared_ptr<NodeStyle> green() noexcept(true) { return std::make_shared<NodeStyle>(IM_COL32(90,191,93,255), ImColor(233,241,244,255), 3.5f); }
         /// @brief <BR>Default red style
-        static std::shared_ptr<NodeStyle> red() { return std::make_shared<NodeStyle>(IM_COL32(191,90,90,255), ImColor(233,241,244,255), 11.f); }
+        static std::shared_ptr<NodeStyle> red()   noexcept(true) { return std::make_shared<NodeStyle>(IM_COL32(191,90,90,255), ImColor(233,241,244,255), 11.f); }
         /// @brief <BR>Default brown style
-        static std::shared_ptr<NodeStyle> brown() { return std::make_shared<NodeStyle>(IM_COL32(191,134,90,255), ImColor(233,241,244,255), 6.5f); }
+        static std::shared_ptr<NodeStyle> brown() noexcept(true) { return std::make_shared<NodeStyle>(IM_COL32(191,134,90,255), ImColor(233,241,244,255), 6.5f); }
     };
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -190,49 +201,56 @@ namespace ImFlow
          * @param right Pointer to the input Pin of the Link
          * @param inf Pointer to the Handler that contains the Link
          */
-        explicit Link(Pin* left, Pin* right, ImNodeFlow* inf) : m_left(left), m_right(right), m_inf(inf) {}
+        constexpr explicit Link(Pin* left, Pin* right, ImNodeFlow* inf) noexcept(true)
+          : m_left(left), m_right(right), m_inf(inf), m_hovered(false), m_selected(false)
+        {}
 
         /**
          * @brief <BR>Destruction of a link
          * @details Deletes references of this links form connected pins
          */
-        ~Link();
+        ~Link() noexcept(true);
 
         /**
          * @brief <BR>Looping function to update the Link
          * @details Draws the Link and updates Hovering and Selected status.
          */
-        void update();
+        void update() noexcept(true);
 
         /**
          * @brief <BR>Get Left pin of the link
          * @return Pointer to the Pin
          */
-        [[nodiscard]] Pin* left() const { return m_left; }
+        [[nodiscard]] constexpr Pin* left() const noexcept(true) 
+        { return m_left; }
 
         /**
          * @brief <BR>Get Right pin of the link
          * @return Pointer to the Pin
          */
-        [[nodiscard]] Pin* right() const { return m_right; }
+        [[nodiscard]] constexpr Pin* right() const noexcept(true)
+        { return m_right; }
 
         /**
          * @brief <BR>Get hovering status
          * @return [TRUE] If the link is hovered in the current frame
          */
-        [[nodiscard]] bool isHovered() const { return m_hovered; }
+        [[nodiscard]] constexpr bool isHovered() const noexcept(true)
+        { return m_hovered; }
 
         /**
          * @brief <BR>Get selected status
          * @return [TRUE] If the link is selected in the current frame
          */
-        [[nodiscard]] bool isSelected() const { return m_selected; }
+        [[nodiscard]] constexpr bool isSelected() const noexcept(true)
+        { return m_selected; }
+
     private:
-        Pin* m_left;
-        Pin* m_right;
+        Pin*        m_left;
+        Pin*        m_right;
         ImNodeFlow* m_inf;
-        bool m_hovered = false;
-        bool m_selected = false;
+        bool        m_hovered;
+        bool        m_selected;
     };
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -246,9 +264,9 @@ namespace ImFlow
         /// @brief Background of the grid
         ImU32 background = IM_COL32(33,41,45,255);
         /// @brief Main lines of the grid
-        ImU32 grid = IM_COL32(200, 200, 200, 40);
+        ImU32 grid       = IM_COL32(200, 200, 200, 40);
         /// @brief Secondary lines
-        ImU32 subGrid = IM_COL32(200, 200, 200, 10);
+        ImU32 subGrid    = IM_COL32(200, 200, 200, 10);
     };
 
     /**
@@ -257,9 +275,9 @@ namespace ImFlow
     struct InfStyler
     {
         /// @brief Size of main grid
-        float grid_size = 50.f;
+        float     grid_size = 50.f;
         /// @brief Sub-grid divisions for Node snapping
-        float grid_subdivisions = 5.f;
+        float     grid_subdivisions = 5.f;
         /// @brief ImNodeFlow colors
         InfColors colors;
     };
@@ -277,14 +295,17 @@ namespace ImFlow
          * @brief <BR>Instantiate a new editor with default name.
          * <BR> Editor name will be "FlowGrid + the number of editors"
          */
-        ImNodeFlow() : ImNodeFlow("FlowGrid" + std::to_string(m_instances)) {}
+        ImNodeFlow() noexcept(true)
+         : ImNodeFlow("FlowGrid" + std::to_string(m_instances)) 
+        {}
 
         /**
          * @brief <BR>Instantiate a new editor with given name
          * @details Creates a new Node Editor with the given name.
          * @param name Name of the editor
          */
-        explicit ImNodeFlow(std::string name) :m_name(std::move(name))
+        explicit ImNodeFlow( std::string&& name ) noexcept(true)
+         : m_name(std::move(name))
         {
             m_instances++;
             m_context.config().extra_window_wrapper = true;
@@ -295,7 +316,7 @@ namespace ImFlow
          * @brief <BR>Handler loop
          * @details Main update function. Refreshes all the logic and draws everything. Must be called every frame.
          */
-        void update();
+        void update() noexcept(true);
 
         /**
          * @brief <BR>Add a node to the grid
@@ -308,7 +329,7 @@ namespace ImFlow
          * Inheritance is checked at compile time, \<T> MUST be derived from BaseNode.
          */
         template<typename T, typename... Params>
-        std::shared_ptr<T> addNode(const ImVec2& pos, Params&&... args);
+        std::shared_ptr<T> addNode(const ImVec2& pos, Params&&... args) noexcept(true);
 
     private:
         /**
@@ -333,7 +354,7 @@ namespace ImFlow
          * @param pos the position at which to place the node
          */
         template<typename L>
-        std::shared_ptr<NodeWrapper<L>> addLambdaNode(L&& lambda, const ImVec2& pos)
+        std::shared_ptr<NodeWrapper<L>> addLambdaNode(L&& lambda, const ImVec2& pos) noexcept(true)
         {
             return addNode<NodeWrapper<L>>(pos, std::forward<L>(lambda));
         }
@@ -349,7 +370,7 @@ namespace ImFlow
          * Inheritance is checked at compile time, \<T> MUST be derived from BaseNode.
          */
         template<typename T, typename... Params>
-        std::shared_ptr<T> placeNodeAt(const ImVec2& pos, Params&&... args);
+        std::shared_ptr<T> placeNodeAt(const ImVec2& pos, Params&&... args) noexcept(true);
 
         /**
          * @brief <BR>Add a node to the grid using mouse position
@@ -361,13 +382,13 @@ namespace ImFlow
          * Inheritance is checked at compile time, \<T> MUST be derived from BaseNode.
          */
         template<typename T, typename... Params>
-        std::shared_ptr<T> placeNode(Params&&... args);
+        std::shared_ptr<T> placeNode(Params&&... args) noexcept(true);
 
         /**
          * @brief <BR>Add link to the handler internal list
          * @param link Reference to the link
          */
-        void addLink(std::shared_ptr<Link>& link);
+        void addLink(std::shared_ptr<Link>& link) noexcept(true);
 
         /**
          * @brief <BR>Pop-up when link is "dropped"
@@ -376,86 +397,103 @@ namespace ImFlow
          * @param content Function or Lambda containing only the contents of the pop-up and the subsequent logic
          * @param key Optional key required in order to open the pop-up
          */
-        void droppedLinkPopUpContent(std::function<void(Pin* dragged)> content, ImGuiKey key = ImGuiKey_None) { m_droppedLinkPopUp = std::move(content); m_droppedLinkPupUpComboKey = key; }
+        void droppedLinkPopUpContent(std::function<void(Pin* dragged)> content, ImGuiKey key = ImGuiKey_None) noexcept(true)
+        { 
+          m_droppedLinkPopUp = std::move(content); 
+          m_droppedLinkPupUpComboKey = key; 
+        }
 
         /**
          * @brief <BR>Pop-up when right-clicking
          * @details Sets the content of a pop-up that can be displayed when right-clicking on the grid.
          * @param content Function or Lambda containing only the contents of the pop-up and the subsequent logic
          */
-        void rightClickPopUpContent(std::function<void(BaseNode* node)> content) { m_rightClickPopUp = std::move(content); }
+        void rightClickPopUpContent(std::function<void(BaseNode* node)> content) noexcept(true)
+        { m_rightClickPopUp = std::move(content); }
 
         /**
          * @brief <BR>Get mouse clicking status
          * @return [TRUE] if mouse is clicked and click hasn't been consumed
          */
-        [[nodiscard]] bool getSingleUseClick() const { return m_singleUseClick; }
+        [[nodiscard]] constexpr bool getSingleUseClick() const noexcept(true) 
+        { return m_singleUseClick; }
 
         /**
          * @brief <BR>Consume the click for the given frame
          */
-        void consumeSingleUseClick() { m_singleUseClick = false; }
+        constexpr void consumeSingleUseClick() noexcept(true)
+        { m_singleUseClick = false; }
 
         /**
          * @brief <BR>Get editor's name
          * @return Const reference to editor's name
          */
-        const std::string& getName() { return m_name; }
+        constexpr std::string_view getName() noexcept(true)
+        { return m_name; }
 
         /**
          * @brief <BR>Get editor's position
          * @return Const reference to editor's position in screen coordinates
          */
-        const ImVec2& getPos() { return m_context.origin(); }
+        constexpr const ImVec2& getPos() noexcept(true)
+        { return m_context.origin(); }
 
         /**
          * @brief <BR>Get editor's grid scroll
          * @details Scroll is the offset from the origin of the grid, changes while navigating the grid.
          * @return Const reference to editor's grid scroll
          */
-        const ImVec2& getScroll() { return m_context.scroll(); }
+        constexpr const ImVec2& getScroll() noexcept(true)
+        { return m_context.scroll(); }
 
         /**
          * @brief <BR>Get editor's list of nodes
          * @return Const reference to editor's internal nodes list
          */
-        std::unordered_map<NodeUID, std::shared_ptr<BaseNode>>& getNodes() { return m_nodes; }
+        constexpr std::unordered_map<NodeUID, std::shared_ptr<BaseNode>>& getNodes() noexcept(true)
+        { return m_nodes; }
 
         /**
          * @brief <BR>Get nodes count
          * @return Number of nodes present in the editor
          */
-        uint32_t getNodesCount() { return (uint32_t)m_nodes.size(); }
+        constexpr uint32_t getNodesCount() noexcept(true)
+        { return (uint32_t)m_nodes.size(); }
 
         /**
          * @brief <BR>Get editor's list of links
          * @return Const reference to editor's internal links list
          */
-        const std::vector<std::weak_ptr<Link>>& getLinks() { return m_links; }
+        constexpr const std::vector<std::weak_ptr<Link>>& getLinks() noexcept(true)
+        { return m_links; }
 
         /**
          * @brief <BR>Get zooming viewport
          * @return Const reference to editor's internal viewport for zoom support
          */
-        ContainedContext& getGrid() { return m_context; }
+        constexpr ContainedContext& getGrid() noexcept(true)
+        { return m_context; }
 
         /**
          * @brief <BR>Get dragging status
          * @return [TRUE] if a Node is being dragged around the grid
          */
-        [[nodiscard]] bool isNodeDragged() const { return m_draggingNode; }
+        [[nodiscard]] constexpr bool isNodeDragged() const noexcept(true)
+        { return m_draggingNode; }
 
         /**
          * @brief <BR>Get current style
          * @return Reference to style variables
          */
-        InfStyler& getStyle() { return m_style; }
+        constexpr InfStyler& getStyle() noexcept(true)
+        { return m_style; }
 
         /**
          * @brief <BR>Set editor's size
          * @param size Editor's size. Set to (0, 0) to auto-fit.
          */
-        void setSize(const ImVec2& size) { m_context.config().size = size; }
+        constexpr void setSize(const ImVec2& size) noexcept(true)
+        { m_context.config().size = size; }
 
         /**
          * @brief <BR>Set dragging status
@@ -463,54 +501,58 @@ namespace ImFlow
          *
          * The new state will only be updated one at the start of each frame.
          */
-        void draggingNode(bool state) { m_draggingNodeNext = state; }
+        constexpr void draggingNode(bool state) noexcept(true)
+        { m_draggingNodeNext = state; }
 
         /**
          * @brief <BR>Set what pin is being hovered
          * @param hovering Pointer to the hovered pin
          */
-        void hovering(Pin* hovering) { m_hovering = hovering; }
+        constexpr void hovering(Pin* hovering) noexcept(true)
+        { m_hovering = hovering; }
 
         /**
          * @brief <BR>Set what node is being hovered
          * @param hovering Pointer to the hovered node
          */
-        void hoveredNode(BaseNode* hovering) { m_hoveredNode = hovering; }
+        constexpr void hoveredNode(BaseNode* hovering) noexcept(true)
+        { m_hoveredNode = hovering; }
 
         /**
          * @brief <BR>Convert coordinates from screen to grid
          * @param p Point in screen coordinates to be converted
          * @return Point in grid's coordinates
          */
-        ImVec2 screen2grid(const ImVec2& p);
+        ImVec2 screen2grid(const ImVec2& p) noexcept(true);
 
         /**
          * @brief <BR>Convert coordinates from grid to screen
          * @param p Point in grid's coordinates to be converted
          * @return Point in screen coordinates
          */
-        ImVec2 grid2screen(const ImVec2 &p);
+        ImVec2 grid2screen(const ImVec2 &p) noexcept(true);
 
         /**
          * @brief <BR>Check if mouse is on selected node
          * @return [TRUE] if the mouse is hovering a selected node
          */
-        bool on_selected_node();
+        bool on_selected_node() noexcept(true);
 
         /**
          * @brief <BR>Check if mouse is on a free point on the grid
          * @return [TRUE] if the mouse is not hovering a node or a link
          */
-        bool on_free_space();
+        bool on_free_space() noexcept(true);
 
         /**
          * @brief <BR>Get recursion blacklist for nodes
          * @return Reference to blacklist
          */
-        std::vector<std::string>& get_recursion_blacklist() { return m_pinRecursionBlacklist; }
+        constexpr std::vector<std::string>& get_recursion_blacklist() noexcept(true)
+        { return m_pinRecursionBlacklist; }
     private:
-        std::string m_name;
-        ContainedContext m_context;
+        const std::string m_name;
+        ContainedContext  m_context;
 
         bool m_singleUseClick = false;
 
@@ -525,9 +567,10 @@ namespace ImFlow
         BaseNode* m_hoveredNodeAux = nullptr;
 
         BaseNode* m_hoveredNode = nullptr;
-        bool m_draggingNode = false, m_draggingNodeNext = false;
-        Pin* m_hovering = nullptr;
-        Pin* m_dragOut = nullptr;
+        bool      m_draggingNode = false;
+        bool      m_draggingNodeNext = false;
+        Pin*      m_hovering = nullptr;
+        Pin*      m_dragOut = nullptr;
 
         InfStyler m_style;
     };
@@ -549,14 +592,14 @@ namespace ImFlow
          * @brief <BR>Main loop of the node
          * @details Updates position, hovering and selected status, and renders the node. Must be called each frame.
          */
-        void update();
+        void update() noexcept(true);
 
         /**
          * @brief <BR>Content of the node
          * @details Function to be implemented by derived custom nodes.
          *          Must contain the body of the node. If left empty the node will only have input and output pins.
          */
-        virtual void draw() {}
+        virtual void draw() noexcept(true) = 0;
 
         /**
          * @brief <BR>Add an Input to the node
@@ -571,7 +614,7 @@ namespace ImFlow
          * @return Shared pointer to the newly added pin
          */
         template<typename T>
-        std::shared_ptr<InPin<T>> addIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr);
+        std::shared_ptr<InPin<T>> addIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Add an Input to the node
@@ -587,7 +630,7 @@ namespace ImFlow
          * @return Shared pointer to the newly added pin
          */
         template<typename T, typename U>
-        std::shared_ptr<InPin<T>> addIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr);
+        std::shared_ptr<InPin<T>> addIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Remove input pin
@@ -595,13 +638,13 @@ namespace ImFlow
          * @param uid Unique identifier of the pin
          */
         template<typename U>
-        void dropIN(const U& uid);
+        void dropIN(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Remove input pin
          * @param uid Unique identifier of the pin
          */
-        void dropIN(const char* uid);
+        void dropIN(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Show a temporary input pin
@@ -617,7 +660,7 @@ namespace ImFlow
          * @return Const reference to the value of the connected link for the current frame of defReturn
          */
         template<typename T>
-        const T& showIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr);
+        const T& showIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Show a temporary input pin
@@ -634,7 +677,7 @@ namespace ImFlow
          * @return Const reference to the value of the connected link for the current frame of defReturn
          */
         template<typename T, typename U>
-        const T& showIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr);
+        const T& showIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Add an Output to the node
@@ -648,7 +691,7 @@ namespace ImFlow
          * @return Shared pointer to the newly added pin. Must be used to set the behaviour
          */
         template<typename T>
-        [[nodiscard]] std::shared_ptr<OutPin<T>> addOUT(const std::string& name, std::shared_ptr<PinStyle> style = nullptr);
+        [[nodiscard]] std::shared_ptr<OutPin<T>> addOUT(const std::string& name, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Add an Output to the node
@@ -663,7 +706,7 @@ namespace ImFlow
          * @return Shared pointer to the newly added pin. Must be used to set the behaviour
          */
         template<typename T, typename U>
-        [[nodiscard]] std::shared_ptr<OutPin<T>> addOUT_uid(const U& uid, const std::string& name, std::shared_ptr<PinStyle> style = nullptr);
+        [[nodiscard]] std::shared_ptr<OutPin<T>> addOUT_uid(const U& uid, const std::string& name, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Remove output pin
@@ -671,13 +714,13 @@ namespace ImFlow
          * @param uid Unique identifier of the pin
          */
         template<typename U>
-        void dropOUT(const U& uid);
+        void dropOUT(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Remove output pin
          * @param uid Unique identifier of the pin
          */
-        void dropOUT(const char* uid);
+        void dropOUT(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Show a temporary output pin
@@ -692,7 +735,7 @@ namespace ImFlow
          * @param style Style of the pin
          */
         template<typename T>
-        void showOUT(const std::string& name, std::function<T()> behaviour, std::shared_ptr<PinStyle> style = nullptr);
+        void showOUT(const std::string& name, std::function<T()> behaviour, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Show a temporary output pin
@@ -708,7 +751,7 @@ namespace ImFlow
          * @param style Style of the pin
          */
         template<typename T, typename U>
-        void showOUT_uid(const U& uid, const std::string& name, std::function<T()> behaviour, std::shared_ptr<PinStyle> style = nullptr);
+        void showOUT_uid(const U& uid, const std::string& name, std::function<T()> behaviour, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Get Input value from an InPin
@@ -719,7 +762,7 @@ namespace ImFlow
          * @return Const reference to the value
          */
         template<typename T, typename U>
-        const T& getInVal(const U& uid);
+        const T& getInVal(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Get Input value from an InPin
@@ -729,7 +772,7 @@ namespace ImFlow
          * @return Const reference to the value
          */
         template<typename T>
-        const T& getInVal(const char* uid);
+        const T& getInVal(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to input pin
@@ -738,14 +781,14 @@ namespace ImFlow
          * @return Generic pointer to the pin
          */
         template<typename U>
-        Pin* inPin(const U& uid);
+        Pin* inPin(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to input pin
          * @param uid Unique identifier of the pin
          * @return Generic pointer to the pin
          */
-        Pin* inPin(const char* uid);
+        Pin* inPin(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to output pin
@@ -754,120 +797,137 @@ namespace ImFlow
          * @return Generic pointer to the pin
          */
         template<typename U>
-        Pin* outPin(const U& uid);
+        Pin* outPin(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to output pin
          * @param uid Unique identifier of the pin
          * @return Generic pointer to the pin
          */
-        Pin* outPin(const char* uid);
+        Pin* outPin(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Get internal input pins list
          * @return Const reference to node's internal list
          */
-        const std::vector<std::shared_ptr<Pin>>& getIns() { return m_ins; }
+        const std::vector<std::shared_ptr<Pin>>& getIns() noexcept(true)
+        { return m_ins; }
 
         /**
          * @brief <BR>Get internal output pins list
          * @return Const reference to node's internal list
          */
-        const std::vector<std::shared_ptr<Pin>>& getOuts() { return m_outs; }
+        const std::vector<std::shared_ptr<Pin>>& getOuts() noexcept(true)
+        { return m_outs; }
 
         /**
          * @brief <BR>Delete itself
          */
-        void destroy() { m_destroyed = true; }
+        constexpr void destroy() noexcept(true)
+        { m_destroyed = true; }
 
         /*
          * @brief <BR>Get if node must be deleted
          */
-        [[nodiscard]] bool toDestroy() const { return m_destroyed; }
+        [[nodiscard]] constexpr bool toDestroy() const noexcept(true)
+        { return m_destroyed; }
 
         /**
          * @brief <BR>Get hovered status
          * @return [TRUE] if the mouse is hovering the node
          */
-        bool isHovered();
+        bool isHovered() noexcept(true);
 
         /**
          * @brief <BR>Get node's UID
          * @return Node's unique identifier
          */
-        [[nodiscard]] NodeUID getUID() const { return m_uid; }
+        [[nodiscard]] constexpr NodeUID getUID() const noexcept(true)
+        { return m_uid; }
 
         /**
          * @brief <BR>Get node name
          * @return Const reference to the node's name
          */
-        const std::string& getName() { return m_title; }
+        constexpr const std::string_view getName() noexcept(true)
+        { return m_title; }
 
         /**
          * @brief <BR>Get node size
          * @return Const reference to the node's size
          */
-        const ImVec2& getSize() { return  m_size; }
+        constexpr const ImVec2& getSize() noexcept(true)
+        { return  m_size; }
 
         /**
          * @brief <BR>Get node position
          * @return Const reference to the node's position
          */
-        const ImVec2& getPos() { return  m_pos; }
+        constexpr const ImVec2& getPos() noexcept(true)
+        { return  m_pos; }
 
         /**
          * @brief <BR>Get grid handler bound to node
          * @return Pointer to the handler
          */
-        ImNodeFlow* getHandler() { return m_inf; }
+        constexpr ImNodeFlow* getHandler() noexcept(true)
+        { return m_inf; }
 
         /**
          * @brief <BR>Get node's style
          * @return Shared pointer to the node's style
          */
-        const std::shared_ptr<NodeStyle>& getStyle() { return m_style; }
+        constexpr const std::shared_ptr<NodeStyle>& getStyle() noexcept(true)
+        { return m_style; }
 
         /**
          * @brief <BR>Get selected status
          * @return [TRUE] if the node is selected
          */
-        [[nodiscard]] bool isSelected() const { return m_selected; }
+        [[nodiscard]] constexpr bool isSelected() const noexcept(true)
+        { return m_selected; }
 
         /**
          * @brief <BR>Get dragged status
          * @return [TRUE] if the node is being dragged
          */
-        [[nodiscard]] bool isDragged() const { return m_dragged; }
+        [[nodiscard]] constexpr bool isDragged() const noexcept(true)
+        { return m_dragged; }
 
         /**
          * @brief <BR>Set node's uid
          * @param uid Node's unique identifier
          */
-        BaseNode* setUID(NodeUID uid) { m_uid = uid; return this; }
+        constexpr BaseNode* setUID(NodeUID uid) noexcept(true)
+        { m_uid = uid; return this; }
 
         /**
          * @brief <BR>Set node's name
          * @param name New title
          */
-        BaseNode* setTitle(const std::string& title) { m_title = title; return this; }
+        constexpr BaseNode* setTitle(const std::string& title) noexcept(true)
+        { m_title = title; return this; }
 
         /**
          * @brief <BR>Set node's position
          * @param pos Position in grid coordinates
          */
-        BaseNode* setPos(const ImVec2& pos) { m_pos = pos; m_posTarget = pos; return this; }
+        constexpr BaseNode* setPos(const ImVec2& pos) noexcept(true)
+        { m_pos = pos; m_posTarget = pos; return this; }
 
         /**
          * @brief <BR>Set ImNodeFlow handler
          * @param inf Grid handler for the node
          */
-        BaseNode* setHandler(ImNodeFlow* inf) { m_inf = inf; return this; }
+        constexpr BaseNode* setHandler(ImNodeFlow* inf) noexcept(true)
+        { m_inf = inf; return this; }
 
         /**
          * @brief Set node's style
          * @param style New style
          */
-        BaseNode* setStyle(std::shared_ptr<NodeStyle> style) { m_style = std::move(style); return this; }
+        BaseNode* setStyle(std::shared_ptr<NodeStyle> style) noexcept(true)
+        { m_style = std::move(style); return this; }
 
         /**
          * @brief <BR>Set selected status
@@ -927,7 +987,7 @@ namespace ImFlow
          * @param inf Pointer to the Grid Handler the pin is in (same as parent)
          * @param style Style of the pin
          */
-        explicit Pin(PinUID uid, std::string name, std::shared_ptr<PinStyle> style, PinType kind, BaseNode* parent, ImNodeFlow** inf) noexcept
+        explicit Pin(PinUID uid, std::string name, std::shared_ptr<PinStyle> style, PinType kind, BaseNode* parent, ImNodeFlow** inf) noexcept(true)
           : m_uid(uid), m_name(std::move(name)), m_style(std::move(style)), 
             m_pos(0.f, 0.f), m_size(0.f, 0.f), m_type(kind), m_parent(parent), 
             m_inf(inf), m_renderer(nullptr)
@@ -943,93 +1003,100 @@ namespace ImFlow
          * @brief <BR>Main loop of the pin
          * @details Updates position, hovering and dragging status, and renders the pin. Must be called each frame.
          */
-        void update() noexcept;
+        void update() noexcept(true);
 
         /**
          * @brief <BR>Draw default pin's socket
          */
-        void drawSocket();
+        void drawSocket() noexcept(true);
 
         /**
          * @brief <BR>Draw default pin's decoration (border, bg, and hover overlay)
          */
-        void drawDecoration();
+        void drawDecoration() noexcept(true);
 
         /**
          * @brief <BR>Used by output pins to calculate their values
          */
-        virtual void resolve() {}
+        virtual void resolve() noexcept(true) = 0;
 
         /**
          * @brief <BR>Custom render function to override Pin appearance
          * @param r Function or lambda expression with new ImGui rendering
          */
-        Pin* renderer(std::function<void(Pin* p)> r) { m_renderer = std::move(r); return this; }
+        Pin* renderer(std::function<void(Pin* p)> r) noexcept(true)
+        { m_renderer = std::move(r); return this; }
 
         /**
          * @brief <BR>Create link between pins
          * @param other Pointer to the other pin
          */
-        virtual void createLink(Pin* other) = 0;
+        virtual void createLink(Pin* other) noexcept(true) = 0;
 
         /**
          * @brief <BR>Set the reference to a link
          * @param link Smart pointer to the link
          */
-        virtual void setLink( [[maybe_unused]] std::shared_ptr<Link>& link) {}
+        virtual void setLink( [[maybe_unused]] std::shared_ptr<Link>& link) noexcept(true) = 0;
 
         /**
          * @brief <BR>Delete link reference
          */
-        virtual void deleteLink() = 0;
+        virtual void deleteLink() noexcept(true) = 0;
 
         /**
          * @brief <BR>Get connected status
          * @return [TRUE] if the pin is connected
          */
-        virtual bool isConnected() = 0;
+        virtual bool isConnected() noexcept(true) = 0;
 
         /**
          * @brief <BR>Get pin's link
          * @return Weak_ptr reference to pin's link
          */
-        virtual std::weak_ptr<Link> getLink() { return std::weak_ptr<Link>{}; }
+        virtual std::weak_ptr<Link> getLink() noexcept(true)
+        { return std::weak_ptr<Link>{}; }
 
         /**
          * @brief <BR>Get pin's UID
          * @return Unique identifier of the pin
          */
-        [[nodiscard]] PinUID getUid() const { return m_uid; }
+        [[nodiscard]] constexpr PinUID getUid() const noexcept(true)
+        { return m_uid; }
 
         /**
          * @brief <BR>Get pin's name
          * @return Const reference to pin's name
          */
-        constexpr const std::string& getName() { return m_name; }
+        constexpr std::string_view getName() noexcept(true)
+        { return m_name; }
 
         /**
          * @brief <BR>Get pin's position
          * @return Const reference to pin's position in grid coordinates
          */
-        [[nodiscard]] constexpr const ImVec2& getPos() { return m_pos; }
+        [[nodiscard]] constexpr const ImVec2& getPos() noexcept(true)
+        { return m_pos; }
 
         /**
          * @brief <BR>Get pin's hit-box size
          * @return Const reference to pin's hit-box size
          */
-        [[nodiscard]] const ImVec2& getSize() { return m_size; }
+        [[nodiscard]] constexpr const ImVec2& getSize() noexcept(true)
+        { return m_size; }
 
         /**
          * @brief <BR>Get pin's parent node
          * @return Generic type pointer to pin's parent node. (Node that contains it)
          */
-        BaseNode* getParent() { return m_parent; }
+        BaseNode* getParent() noexcept(true)
+        { return m_parent; }
 
         /**
          * @brief <BR>Get pin's type
          * @return The pin type. Either Input or Output
          */
-        PinType getType() { return m_type; }
+        PinType getType() noexcept(true) { return m_type; }
 
         /**
          * @brief <BR>Get pin's data type (aka: \<T>)
@@ -1107,12 +1174,13 @@ namespace ImFlow
          * @brief <BR>Create link between pins
          * @param other Pointer to the other pin
          */
-        void createLink(Pin* other) override;
+        void createLink(Pin* other) noexcept(true) override;
 
         /**
         * @brief <BR>Delete the link connected to the pin
         */
-        void deleteLink() override { m_link.reset(); }
+        void deleteLink()  noexcept(true) override 
+        { m_link.reset(); }
 
         /**
          * @brief Specify if connections from an output on the same node are allowed
@@ -1124,37 +1192,42 @@ namespace ImFlow
          * @brief <BR>Get connected status
          * @return [TRUE] is pin is connected to a link
          */
-        bool isConnected() override { return m_link != nullptr; }
+        bool isConnected() noexcept(true) override
+        { return m_link != nullptr; }
 
         /**
          * @brief <BR>Get pin's link
          * @return Weak_ptr reference to the link connected to the pin
          */
-        std::weak_ptr<Link> getLink() override { return m_link; }
+        std::weak_ptr<Link> getLink() noexcept(true) override 
+        { return m_link; }
 
         /**
          * @brief <BR>Get InPin's connection filter
          * @return InPin's connection filter configuration
          */
-        [[nodiscard]] const std::function<bool(Pin*, Pin*)>& getFilter() const { return m_filter; }
+        [[nodiscard]] const std::function<bool(Pin*, Pin*)>& getFilter() const noexcept(true)
+        { return m_filter; }
 
         /**
          * @brief <BR>Get pin's data type (aka: \<T>)
          * @return String containing unique information identifying the data type
          */
-        [[nodiscard]] const std::type_info& getDataType() const override { return typeid(T); };
+        [[nodiscard]] const std::type_info& getDataType() const noexcept(true) override 
+        { return typeid(T); };
 
         /**
          * @brief <BR>Get pin's link attachment point (socket)
          * @return Grid coordinates to the attachment point between the link and the pin's socket
          */
-        ImVec2 pinPoint() override { return m_pos + ImVec2(-m_style->extra.socket_padding, m_size.y / 2); }
+        ImVec2 pinPoint() noexcept(true) override 
+        { return m_pos + ImVec2(-m_style->extra.socket_padding, m_size.y / 2); }
 
         /**
          * @brief <BR>Get value carried by the connected link
          * @return Reference to the value of the connected OutPin. Or the default value if not connected
          */
-        const T& val();
+        const T& val() noexcept(true);
     private:
         std::shared_ptr<Link> m_link;
         T m_emptyVal;
@@ -1179,7 +1252,8 @@ namespace ImFlow
          * @param style Style of the pin
          */
         explicit OutPin(PinUID uid, const std::string& name, std::shared_ptr<PinStyle> style, BaseNode* parent, ImNodeFlow** inf)
-            :Pin(uid, name, style, PinType_Output, parent, inf) {}
+            :Pin(uid, name, style, PinType_Output, parent, inf)
+        {}
 
         /**
          * @brief <BR>When parent gets deleted, remove the links
@@ -1193,36 +1267,38 @@ namespace ImFlow
          * @brief <BR>Create link between pins
          * @param other Pointer to the other pin
          */
-        void createLink(Pin* other) override;
+        void createLink(Pin* other)  noexcept(true) override;
 
         /**
          * @brief <BR>Add a connected link to the internal list
          * @param link Pointer to the link
          */
-        void setLink(std::shared_ptr<Link>& link) override;
+        void setLink(std::shared_ptr<Link>& link)  noexcept(true) override;
 
         /**
          * @brief <BR>Delete any expired weak pointers to a (now deleted) link
          */
-        void deleteLink() override;
+        void deleteLink() noexcept(true) override;
 
         /**
          * @brief <BR>Get connected status
          * @return [TRUE] is pin is connected to one or more links
          */
-        bool isConnected() override { return !m_links.empty(); }
+        bool isConnected()  noexcept(true) override 
+        { return !m_links.empty(); }
 
         /**
          * @brief <BR>Get pin's link attachment point (socket)
          * @return Grid coordinates to the attachment point between the link and the pin's socket
          */
-        ImVec2 pinPoint() override { return m_pos + ImVec2(m_size.x + m_style->extra.socket_padding, m_size.y / 2); }
+        ImVec2 pinPoint()  noexcept(true) override 
+        { return m_pos + ImVec2(m_size.x + m_style->extra.socket_padding, m_size.y / 2); }
 
         /**
          * @brief <BR>Get output value
          * @return Const reference to the internal value of the pin
          */
-        const T& val();
+        const T& val() noexcept(true);
 
         /**
          * @brief <BR>Set logic to calculate output value
@@ -1235,11 +1311,12 @@ namespace ImFlow
          * @brief <BR>Get pin's data type (aka: \<T>)
          * @return String containing unique information identifying the data type
          */
-        [[nodiscard]] const std::type_info& getDataType() const override { return typeid(T); };
+        [[nodiscard]] const std::type_info& getDataType() const noexcept(true) override 
+        { return typeid(T); };
     private:
         std::vector<std::weak_ptr<Link>> m_links;
-        std::function<T()> m_behaviour;
-        T m_val;
+        std::function<T()>               m_behaviour;
+        T                                m_val;
     };
 }
 
