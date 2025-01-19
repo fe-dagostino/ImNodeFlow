@@ -395,6 +395,7 @@ inline ImCubicBezierIntersectResult ImCubicBezierLineIntersect(const ImVec2& p0,
         return count;
     };
 
+    /*
     // https://github.com/kaishiqi/Geometric-Bezier/blob/master/GeometricBezier/src/kaishiqi/geometric/intersection/Intersection.as
     //
     // Start with Bezier using Bernstein polynomials for weighting functions:
@@ -406,7 +407,7 @@ inline ImCubicBezierIntersectResult ImCubicBezierLineIntersect(const ImVec2& p0,
     //             /\                  /\                /\       /\
     //             ||                  ||                ||       ||
     //             c3                  c2                c1       c0
-
+    */
     // Calculate the coefficients
     auto c3 =     -p0 + 3 * p1 - 3 * p2 + p3;
     auto c2 =  3 * p0 - 6 * p1 + 3 * p2;

@@ -72,11 +72,11 @@ public:
     ContainedContextConfig& config() { return m_config; }
     void begin();
     void end();
-    [[nodiscard]] ImVec2 size() const { return m_size; }
-    [[nodiscard]] float scale() const { return m_scale; }
-    [[nodiscard]] const ImVec2& origin() const { return m_origin; }
-    [[nodiscard]] bool hovered() const { return m_hovered; }
-    [[nodiscard]] const ImVec2& scroll() const { return m_scroll; }
+    [[nodiscard]] constexpr ImVec2        size()    const noexcept(true) { return m_size; }
+    [[nodiscard]] constexpr float         scale()   const noexcept(true) { return m_scale; }
+    [[nodiscard]] constexpr const ImVec2& origin()  const noexcept(true) { return m_origin; }
+    [[nodiscard]] constexpr bool          hovered() const noexcept(true) { return m_hovered; }
+    [[nodiscard]] constexpr const ImVec2& scroll()  const noexcept(true) { return m_scroll; }
     ImGuiContext* getRawContext() { return m_ctx; }
 private:
     ContainedContextConfig m_config;

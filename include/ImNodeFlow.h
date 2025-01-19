@@ -428,14 +428,14 @@ namespace ImFlow
          * @brief <BR>Get editor's name
          * @return Const reference to editor's name
          */
-        constexpr std::string_view getName() noexcept(true)
+        inline std::string_view getName() noexcept(true)
         { return m_name; }
 
         /**
          * @brief <BR>Get editor's position
          * @return Const reference to editor's position in screen coordinates
          */
-        constexpr const ImVec2& getPos() noexcept(true)
+        inline const ImVec2& getPos() noexcept(true)
         { return m_context.origin(); }
 
         /**
@@ -457,7 +457,7 @@ namespace ImFlow
          * @brief <BR>Get nodes count
          * @return Number of nodes present in the editor
          */
-        constexpr uint32_t getNodesCount() noexcept(true)
+        inline uint32_t getNodesCount() noexcept(true)
         { return (uint32_t)m_nodes.size(); }
 
         /**
@@ -492,7 +492,7 @@ namespace ImFlow
          * @brief <BR>Set editor's size
          * @param size Editor's size. Set to (0, 0) to auto-fit.
          */
-        constexpr void setSize(const ImVec2& size) noexcept(true)
+        inline void setSize(const ImVec2& size) noexcept(true)
         { m_context.config().size = size; }
 
         /**
@@ -849,7 +849,7 @@ namespace ImFlow
          * @brief <BR>Get node name
          * @return Const reference to the node's name
          */
-        constexpr const std::string_view getName() noexcept(true)
+        inline const std::string_view getName() noexcept(true)
         { return m_title; }
 
         /**
@@ -905,7 +905,7 @@ namespace ImFlow
          * @brief <BR>Set node's name
          * @param name New title
          */
-        constexpr BaseNode* setTitle(const std::string& title) noexcept(true)
+        inline BaseNode* setTitle(const std::string& title) noexcept(true)
         { m_title = title; return this; }
 
         /**
@@ -1068,7 +1068,7 @@ namespace ImFlow
          * @brief <BR>Get pin's name
          * @return Const reference to pin's name
          */
-        constexpr std::string_view getName() noexcept(true)
+        inline std::string_view getName() noexcept(true)
         { return m_name; }
 
         /**
