@@ -428,14 +428,14 @@ namespace ImFlow
          * @brief <BR>Get editor's name
          * @return Const reference to editor's name
          */
-        inline std::string_view getName() noexcept(true)
+        inline std::string_view getName() const noexcept(true)
         { return m_name; }
 
         /**
          * @brief <BR>Get editor's position
          * @return Const reference to editor's position in screen coordinates
          */
-        inline const ImVec2& getPos() noexcept(true)
+        inline const ImVec2& getPos() const noexcept(true)
         { return m_context.origin(); }
 
         /**
@@ -849,21 +849,21 @@ namespace ImFlow
          * @brief <BR>Get node name
          * @return Const reference to the node's name
          */
-        inline const std::string_view getName() noexcept(true)
+        inline std::string_view getName() const noexcept(true)
         { return m_title; }
 
         /**
          * @brief <BR>Get node size
          * @return Const reference to the node's size
          */
-        constexpr const ImVec2& getSize() noexcept(true)
+        constexpr const ImVec2& getSize() const noexcept(true)
         { return  m_size; }
 
         /**
          * @brief <BR>Get node position
          * @return Const reference to the node's position
          */
-        constexpr const ImVec2& getPos() noexcept(true)
+        constexpr const ImVec2& getPos() const noexcept(true)
         { return  m_pos; }
 
         /**
@@ -1068,21 +1068,21 @@ namespace ImFlow
          * @brief <BR>Get pin's name
          * @return Const reference to pin's name
          */
-        inline std::string_view getName() noexcept(true)
+        inline std::string_view getName() const noexcept(true)
         { return m_name; }
 
         /**
          * @brief <BR>Get pin's position
          * @return Const reference to pin's position in grid coordinates
          */
-        [[nodiscard]] constexpr const ImVec2& getPos() noexcept(true)
+        [[nodiscard]] constexpr const ImVec2& getPos() const noexcept(true)
         { return m_pos; }
 
         /**
          * @brief <BR>Get pin's hit-box size
          * @return Const reference to pin's hit-box size
          */
-        [[nodiscard]] constexpr const ImVec2& getSize() noexcept(true)
+        [[nodiscard]] constexpr const ImVec2& getSize() const noexcept(true)
         { return m_size; }
 
         /**
