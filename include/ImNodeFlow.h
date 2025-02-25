@@ -1228,6 +1228,21 @@ namespace ImFlow
          * @return Reference to the value of the connected OutPin. Or the default value if not connected
          */
         const T& val() noexcept(true);
+
+    protected:
+        /**
+         * @brief <BR>Used by output pins to calculate their values
+         */
+        virtual void resolve() noexcept(true) override
+        {}
+
+        /**
+         * @brief <BR>Add a connected link to the internal list
+         * @param link Pointer to the link
+         */
+        void setLink(std::shared_ptr<Link>&)  noexcept(true) override
+        {}
+
     private:
         std::shared_ptr<Link> m_link;
         T m_emptyVal;
@@ -1313,6 +1328,14 @@ namespace ImFlow
          */
         [[nodiscard]] const std::type_info& getDataType() const noexcept(true) override 
         { return typeid(T); };
+
+    protected:
+        /**
+         * @brief <BR>Used by output pins to calculate their values
+         */
+        virtual void resolve() noexcept(true) override
+        {}
+
     private:
         std::vector<std::weak_ptr<Link>> m_links;
         std::function<T()>               m_behaviour;
