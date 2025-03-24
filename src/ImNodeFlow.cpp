@@ -64,9 +64,18 @@ namespace ImFlow {
 
         // Header
         ImGui::BeginGroup();
+        if ( m_style->header_title_font != nullptr ) {
+          ImGui::PushFont(m_style->header_title_font.get());
+        }
+        
         ImGui::TextColored(m_style->header_title_color, "%s", m_title.c_str());
         ImGui::Spacing();
+        
+        if ( m_style->header_title_font != nullptr ) {
+          ImGui::PopFont();
+        }
         ImGui::EndGroup();
+        
         float headerH = ImGui::GetItemRectSize().y;
         float titleW = ImGui::GetItemRectSize().x;
 
