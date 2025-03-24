@@ -146,6 +146,8 @@ namespace ImFlow
     class NodeStyle
     {
     public:
+        using font_t = std::shared_ptr<ImFont>;
+
         /***/
         NodeStyle() = delete;
         /***/
@@ -155,17 +157,18 @@ namespace ImFlow
             padding(13.7f, 6.f, 13.7f, 2.f), radius(radius), border_thickness(-1.35f),
             border_selected_thickness(2.f)
         {}
-
+        /// @brief Font used for the title.
+        font_t  header_title_font;
         /// @brief Body's background color
-        ImU32 bg;
+        ImU32   bg;
         /// @brief Header's background color
-        ImU32 header_bg;
+        ImU32   header_bg;
         /// @brief Header title color
         ImColor header_title_color;
         /// @brief Border color
-        ImU32 border_color;
+        ImU32   border_color;
         /// @brief Border color when selected
-        ImU32 border_selected_color;
+        ImU32   border_selected_color;
 
         /// @brief Body's content padding (Left Top Right Bottom)
         ImVec4 padding;
