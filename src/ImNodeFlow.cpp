@@ -65,7 +65,7 @@ namespace ImFlow {
         // Header
         ImGui::BeginGroup();
         if ( m_style->header_title_font != nullptr ) {
-          ImGui::PushFont(m_style->header_title_font.get());
+          ImGui::PushFont(m_style->header_title_font);
         }
         
         ImGui::TextColored(m_style->header_title_color, "%s", m_title.c_str());
