@@ -109,7 +109,7 @@ inline void ContainedContext::begin()
 {
     ImGui::PushID(this);
     ImGui::PushStyleColor(ImGuiCol_ChildBg, m_config.color);
-    ImGui::BeginChild("view_port", m_config.size, 0, ImGuiWindowFlags_NoMove);
+    ImGui::BeginChild("view_port", m_config.size, 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus );
     ImGui::PopStyleColor();
     m_pos = ImGui::GetWindowPos();
 
