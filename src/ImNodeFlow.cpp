@@ -119,23 +119,23 @@ namespace ImFlow {
         ImGui::BeginGroup();
         for (auto &p: m_outs) {
             // FIXME: This looks horrible
-            if ((m_pos + ImVec2(titleW, 0) + m_inf->getGrid().scroll()).x <
+            if ((m_pos + ImVec2(titleW, 0) + m_inf->getContext().scroll()).x <
                 ImGui::GetCursorPos().x + ImGui::GetWindowPos().x + maxW)
                 p->setPos(ImGui::GetCursorPos() + ImGui::GetWindowPos() + ImVec2(maxW - p->calcWidth(), 0.f));
             else
-                p->setPos(ImVec2((m_pos + ImVec2(titleW - p->calcWidth(), 0) + m_inf->getGrid().scroll()).x,
+                p->setPos(ImVec2((m_pos + ImVec2(titleW - p->calcWidth(), 0) + m_inf->getContext().scroll()).x,
                                  ImGui::GetCursorPos().y + ImGui::GetWindowPos().y));
             p->update();
         }
         for (auto &p: m_dynamicOuts) {
             // FIXME: This looks horrible
-            if ((m_pos + ImVec2(titleW, 0) + m_inf->getGrid().scroll()).x <
+            if ((m_pos + ImVec2(titleW, 0) + m_inf->getContext().scroll()).x <
                 ImGui::GetCursorPos().x + ImGui::GetWindowPos().x + maxW)
                 p.second->setPos(
                         ImGui::GetCursorPos() + ImGui::GetWindowPos() + ImVec2(maxW - p.second->calcWidth(), 0.f));
             else
                 p.second->setPos(
-                        ImVec2((m_pos + ImVec2(titleW - p.second->calcWidth(), 0) + m_inf->getGrid().scroll()).x,
+                        ImVec2((m_pos + ImVec2(titleW - p.second->calcWidth(), 0) + m_inf->getContext().scroll()).x,
                                ImGui::GetCursorPos().y + ImGui::GetWindowPos().y));
             p.second->update();
             p.first -= 1;
