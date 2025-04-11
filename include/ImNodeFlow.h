@@ -472,9 +472,9 @@ namespace ImFlow
 
         /**
          * @brief <BR>Get zooming viewport
-         * @return Const reference to editor's internal viewport for zoom support
+         * @return Reference to editor's internal context for zoom support
          */
-        constexpr ContainedContext& getGrid() noexcept(true)
+        constexpr ContainedContext& getContext() noexcept(true)
         { return m_context; }
 
         /**
