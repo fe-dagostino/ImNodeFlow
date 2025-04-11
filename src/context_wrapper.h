@@ -56,9 +56,9 @@ struct ContainedContextConfig
     ImVec2 size = {0.f, 0.f};
     ImU32 color = IM_COL32_WHITE;
     bool zoom_enabled = true;
-    float zoom_min = 0.3f;
-    float zoom_max = 2.f;
-    float zoom_divisions = 10.f;
+    float zoom_min = 0.1f;
+    float zoom_max = 10.f;
+    float zoom_divisions = 50.f;
     float zoom_smoothness = 5.f;
     float default_zoom = 1.f;
     ImGuiKey reset_zoom_key = ImGuiKey_R;
@@ -78,6 +78,8 @@ public:
     [[nodiscard]] constexpr bool          hovered() const noexcept(true) { return m_hovered; }
     [[nodiscard]] constexpr const ImVec2& scroll()  const noexcept(true) { return m_scroll; }
     ImGuiContext* getRawContext() { return m_ctx; }
+    void          setPreDraw   ( std::function<void()> fn ) noexcept(true) { m_fnPreDraw  = fn; }
+    void          setPostDraw  ( std::function<void()> fn ) noexcept(true) { m_fnPostDraw = fn; }
 private:
     ContainedContextConfig m_config;
 
@@ -93,6 +95,9 @@ private:
 
     float m_scale = m_config.default_zoom, m_scaleTarget = m_config.default_zoom;
     ImVec2 m_scroll = {0.f, 0.f};
+
+    std::function<void()>  m_fnPreDraw;
+    std::function<void()>  m_fnPostDraw;
 };
 
 inline ContainedContext::~ContainedContext()
@@ -125,6 +130,13 @@ inline void ContainedContext::begin()
 
     if (!m_config.extra_window_wrapper)
         return;
+    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Appearing);
+    ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
+
+    /* Allow application level to draw in the child window as soon as it will be created */
+    if (m_fnPreDraw != nullptr)
+    { m_fnPreDraw(); }    
+    
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Appearing);
     ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -192,6 +204,10 @@ inline void ContainedContext::end()
         m_scroll += ImGui::GetIO().MouseDelta / m_scale;
     }
 
+    /* Allow application level to draw after "viewport_container" have been updated */
+    if (m_fnPostDraw != nullptr)
+    { m_fnPostDraw(); }
+    
     ImGui::EndChild();
     ImGui::PopID();
 }
