@@ -130,12 +130,14 @@ inline void ContainedContext::begin()
 
     if (!m_config.extra_window_wrapper)
         return;
-    ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Appearing);
-    ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
 
     /* Allow application level to draw in the child window as soon as it will be created */
     if (m_fnPreDraw != nullptr)
-    { m_fnPreDraw(); }    
+    { 
+      ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Appearing);
+      ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
+      m_fnPreDraw();
+    }   
     
     ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Appearing);
     ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
@@ -206,7 +208,11 @@ inline void ContainedContext::end()
 
     /* Allow application level to draw after "viewport_container" have been updated */
     if (m_fnPostDraw != nullptr)
-    { m_fnPostDraw(); }
+    { 
+        ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Appearing);
+        ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
+        m_fnPostDraw();
+    }
     
     ImGui::EndChild();
     ImGui::PopID();
