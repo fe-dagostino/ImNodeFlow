@@ -52,6 +52,7 @@ inline static void AppendDrawData(ImDrawList* src, ImVec2 origin, float scale)
 
 struct ContainedContextConfig
 {
+    bool grid_enabled = true;
     bool extra_window_wrapper = false;
     ImVec2 size = {0.f, 0.f};
     ImU32 color = IM_COL32_WHITE;
@@ -143,7 +144,8 @@ inline void ContainedContext::begin()
     ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::Begin("viewport_container", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoMove
-                                                | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+                                                | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse
+                                                | ImGuiWindowFlags_NoBringToFrontOnFocus);
     ImGui::PopStyleVar();
 }
 
