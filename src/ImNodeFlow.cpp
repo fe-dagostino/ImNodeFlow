@@ -267,19 +267,22 @@ namespace ImFlow {
 
         ImDrawList *draw_list = ImGui::GetWindowDrawList();
 
-        // Display grid
-        ImVec2 gridSize = ImGui::GetWindowSize();
-        float subGridStep = m_style.grid_size / m_style.grid_subdivisions;
-        for (float x = fmodf(m_context.scroll().x, m_style.grid_size); x < gridSize.x; x += m_style.grid_size)
-            draw_list->AddLine(ImVec2(x, 0.0f), ImVec2(x, gridSize.y), m_style.colors.grid);
-        for (float y = fmodf(m_context.scroll().y, m_style.grid_size); y < gridSize.y; y += m_style.grid_size)
-            draw_list->AddLine(ImVec2(0.0f, y), ImVec2(gridSize.x, y), m_style.colors.grid);
-        if (m_context.scale() > 0.7f) {
-            for (float x = fmodf(m_context.scroll().x, subGridStep); x < gridSize.x; x += subGridStep)
-                draw_list->AddLine(ImVec2(x, 0.0f), ImVec2(x, gridSize.y), m_style.colors.subGrid);
-            for (float y = fmodf(m_context.scroll().y, subGridStep); y < gridSize.y; y += subGridStep)
-                draw_list->AddLine(ImVec2(0.0f, y), ImVec2(gridSize.x, y), m_style.colors.subGrid);
-        }
+        if ( m_context.config().grid_enabled == true )
+        {
+          // Display grid
+          ImVec2 gridSize = ImGui::GetWindowSize();
+          float subGridStep = m_style.grid_size / m_style.grid_subdivisions;
+          for (float x = fmodf(m_context.scroll().x, m_style.grid_size); x < gridSize.x; x += m_style.grid_size)
+              draw_list->AddLine(ImVec2(x, 0.0f), ImVec2(x, gridSize.y), m_style.colors.grid);
+          for (float y = fmodf(m_context.scroll().y, m_style.grid_size); y < gridSize.y; y += m_style.grid_size)
+              draw_list->AddLine(ImVec2(0.0f, y), ImVec2(gridSize.x, y), m_style.colors.grid);
+          if (m_context.scale() > 0.7f) {
+              for (float x = fmodf(m_context.scroll().x, subGridStep); x < gridSize.x; x += subGridStep)
+                  draw_list->AddLine(ImVec2(x, 0.0f), ImVec2(x, gridSize.y), m_style.colors.subGrid);
+              for (float y = fmodf(m_context.scroll().y, subGridStep); y < gridSize.y; y += subGridStep)
+                  draw_list->AddLine(ImVec2(0.0f, y), ImVec2(gridSize.x, y), m_style.colors.subGrid);
+          }
+        } /* if ( m_context.config().grid_enabled == true ) */
 
         // Update and draw nodes
         // TODO: I don't like this
