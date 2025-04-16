@@ -1148,9 +1148,9 @@ namespace ImFlow
     class ConnectionFilter
     {
     public:
-        static std::function<bool(Pin*, Pin*)> None()     { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in){ return true; }; }
-        static std::function<bool(Pin*, Pin*)> SameType() { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in){ return out->getDataType() == in->getDataType(); }; }
-        static std::function<bool(Pin*, Pin*)> Numbers()  { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in){ return out->getDataType() == typeid(double) || out->getDataType() == typeid(float) || out->getDataType() == typeid(int); }; }
+        static std::function<bool(Pin*, Pin*)> None()     noexcept(true) { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in) noexcept(true) { return true; }; }
+        static std::function<bool(Pin*, Pin*)> SameType() noexcept(true) { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in) noexcept(true) { return out->getDataType() == in->getDataType(); }; }
+        static std::function<bool(Pin*, Pin*)> Numbers()  noexcept(true) { return []( [[maybe_unused]] Pin* out, [[maybe_unused]] Pin* in) noexcept(true) { return out->getDataType() == typeid(double) || out->getDataType() == typeid(float) || out->getDataType() == typeid(int); }; }
     };
 
     /**
@@ -1170,7 +1170,7 @@ namespace ImFlow
          * @param inf Pointer to the Grid Handler the pin is in (same as parent)
          * @param style Style of the pin
          */
-        explicit InPin(PinUID uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style, BaseNode* parent, ImNodeFlow** inf)
+        explicit InPin(PinUID uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style, BaseNode* parent, ImNodeFlow** inf) noexcept(true)
             : Pin(uid, name, style, PinType_Input, parent, inf), m_emptyVal(defReturn), m_filter(std::move(filter)) {}
 
         /**
@@ -1182,14 +1182,14 @@ namespace ImFlow
         /**
         * @brief <BR>Delete the link connected to the pin
         */
-        void deleteLink()  noexcept(true) override 
+        void deleteLink() noexcept(true) override 
         { m_link.reset(); }
 
         /**
          * @brief Specify if connections from an output on the same node are allowed
          * @param state New state of the flag
          */
-        void allowSameNodeConnections(bool state) { m_allowSelfConnection = state; }
+        void allowSameNodeConnections(bool state) noexcept(true) { m_allowSelfConnection = state; }
 
         /**
          * @brief <BR>Get connected status
