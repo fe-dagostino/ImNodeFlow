@@ -588,8 +588,11 @@ namespace ImFlow
     class BaseNode
     {
     public:
+        /***/
+        BaseNode() noexcept(true)
+        { m_uid = reinterpret_cast<uintptr_t>(this); }
+        /***/
         virtual ~BaseNode() = default;
-        BaseNode() = default;
 
         /**
          * @brief <BR>Main loop of the node
