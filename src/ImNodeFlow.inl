@@ -44,10 +44,9 @@ namespace ImFlow
         n->setHandler(this);
         if (!n->getStyle())
             n->setStyle(NodeStyle::cyan());
+        
+        m_nodes[n->getUID()] = n;
 
-        auto uid = reinterpret_cast<uintptr_t>(n.get());
-        n->setUID(uid);
-        m_nodes[uid] = n;
         return n;
     }
 
