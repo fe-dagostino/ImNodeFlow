@@ -199,7 +199,7 @@ inline void ContainedContext::end()
     }
 
     // Zoom reset
-    if (ImGui::IsKeyPressed(m_config.reset_zoom_key, false))
+    if (ImGui::IsKeyPressed(m_config.reset_zoom_key, false) && ImGui::GetIO().KeyAlt )
         m_scaleTarget = m_config.default_zoom;
 
     // Scrolling
