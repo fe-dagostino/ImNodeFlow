@@ -62,7 +62,7 @@ struct ContainedContextConfig
     float zoom_divisions = 50.f;
     float zoom_smoothness = 5.f;
     float default_zoom = 1.f;
-    ImGuiKey reset_zoom_key = ImGuiKey_R;
+    ImGuiKey reset_zoom_key = ImGuiKey_R; /* Key in combination with Alt */
     ImGuiMouseButton scroll_button = ImGuiMouseButton_Middle;
 };
 
