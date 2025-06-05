@@ -830,13 +830,17 @@ namespace ImFlow
          * @brief <BR>Delete itself
          */
         constexpr void destroy() noexcept(true)
-        { m_destroyed = true; }
+        { m_destroyed = onDestroy(); }
 
         /*
          * @brief <BR>Get if node must be deleted
          */
         [[nodiscard]] constexpr bool toDestroy() const noexcept(true)
         { return m_destroyed; }
+
+        /***/
+        [[nodiscard]] virtual bool onDestroy() noexcept(true)
+        { return true; }
 
         /**
          * @brief <BR>Get hovered status
