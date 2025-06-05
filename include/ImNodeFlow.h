@@ -620,7 +620,7 @@ namespace ImFlow
          * @return Shared pointer to the newly added pin
          */
         template<typename T>
-        std::shared_ptr<InPin<T>> addIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
+        [[nodiscard]] std::shared_ptr<InPin<T>> addIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Add an Input to the node
@@ -636,7 +636,7 @@ namespace ImFlow
          * @return Shared pointer to the newly added pin
          */
         template<typename T, typename U>
-        std::shared_ptr<InPin<T>> addIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
+        [[nodiscard]] std::shared_ptr<InPin<T>> addIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Remove input pin
@@ -666,7 +666,7 @@ namespace ImFlow
          * @return Const reference to the value of the connected link for the current frame of defReturn
          */
         template<typename T>
-        const T& showIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
+        [[nodiscard]] const T& showIN(const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Show a temporary input pin
@@ -683,7 +683,7 @@ namespace ImFlow
          * @return Const reference to the value of the connected link for the current frame of defReturn
          */
         template<typename T, typename U>
-        const T& showIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
+        [[nodiscard]] const T& showIN_uid(const U& uid, const std::string& name, T defReturn, std::function<bool(Pin*, Pin*)> filter, std::shared_ptr<PinStyle> style = nullptr) noexcept(true);
 
         /**
          * @brief <BR>Add an Output to the node
@@ -768,7 +768,7 @@ namespace ImFlow
          * @return Const reference to the value
          */
         template<typename T, typename U>
-        const T& getInVal(const U& uid) noexcept(true);
+        [[nodiscard]] const T& getInVal(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Get Input value from an InPin
@@ -778,7 +778,7 @@ namespace ImFlow
          * @return Const reference to the value
          */
         template<typename T>
-        const T& getInVal(const char* uid) noexcept(true);
+        [[nodiscard]] const T& getInVal(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to input pin
@@ -787,14 +787,14 @@ namespace ImFlow
          * @return Generic pointer to the pin
          */
         template<typename U>
-        Pin* inPin(const U& uid) noexcept(true);
+        [[nodiscard]] Pin* inPin(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to input pin
          * @param uid Unique identifier of the pin
          * @return Generic pointer to the pin
          */
-        Pin* inPin(const char* uid) noexcept(true);
+        [[nodiscard]] Pin* inPin(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to output pin
@@ -803,27 +803,27 @@ namespace ImFlow
          * @return Generic pointer to the pin
          */
         template<typename U>
-        Pin* outPin(const U& uid) noexcept(true);
+        [[nodiscard]] Pin* outPin(const U& uid) noexcept(true);
 
         /**
          * @brief <BR>Get generic reference to output pin
          * @param uid Unique identifier of the pin
          * @return Generic pointer to the pin
          */
-        Pin* outPin(const char* uid) noexcept(true);
+        [[nodiscard]] Pin* outPin(const char* uid) noexcept(true);
 
         /**
          * @brief <BR>Get internal input pins list
          * @return Const reference to node's internal list
          */
-        const std::vector<std::shared_ptr<Pin>>& getIns() noexcept(true)
+        [[nodiscard]] const std::vector<std::shared_ptr<Pin>>& getIns() noexcept(true)
         { return m_ins; }
 
         /**
          * @brief <BR>Get internal output pins list
          * @return Const reference to node's internal list
          */
-        const std::vector<std::shared_ptr<Pin>>& getOuts() noexcept(true)
+        [[nodiscard]] const std::vector<std::shared_ptr<Pin>>& getOuts() noexcept(true)
         { return m_outs; }
 
         /**
@@ -842,7 +842,7 @@ namespace ImFlow
          * @brief <BR>Get hovered status
          * @return [TRUE] if the mouse is hovering the node
          */
-        bool isHovered() noexcept(true);
+        [[nodiscard]] bool isHovered() noexcept(true);
 
         /**
          * @brief <BR>Get node's UID
@@ -855,35 +855,35 @@ namespace ImFlow
          * @brief <BR>Get node name
          * @return Const reference to the node's name
          */
-        inline std::string_view getName() const noexcept(true)
+        [[nodiscard]] inline std::string_view getName() const noexcept(true)
         { return m_title; }
 
         /**
          * @brief <BR>Get node size
          * @return Const reference to the node's size
          */
-        constexpr const ImVec2& getSize() const noexcept(true)
+        [[nodiscard]] constexpr const ImVec2& getSize() const noexcept(true)
         { return  m_size; }
 
         /**
          * @brief <BR>Get node position
          * @return Const reference to the node's position
          */
-        constexpr const ImVec2& getPos() const noexcept(true)
+        [[nodiscard]] constexpr const ImVec2& getPos() const noexcept(true)
         { return  m_pos; }
 
         /**
          * @brief <BR>Get grid handler bound to node
          * @return Pointer to the handler
          */
-        constexpr ImNodeFlow* getHandler() noexcept(true)
+        [[nodiscard]] constexpr ImNodeFlow* getHandler() noexcept(true)
         { return m_inf; }
 
         /**
          * @brief <BR>Get node's style
          * @return Shared pointer to the node's style
          */
-        constexpr const std::shared_ptr<NodeStyle>& getStyle() noexcept(true)
+        [[nodiscard]] constexpr const std::shared_ptr<NodeStyle>& getStyle() noexcept(true)
         { return m_style; }
 
         /**
