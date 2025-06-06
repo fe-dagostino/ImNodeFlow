@@ -832,6 +832,12 @@ namespace ImFlow
         constexpr void destroy() noexcept(true)
         { m_destroyed = onDestroy(); }
 
+        /**
+         * @brief <BR>Mark the node to be deleted.
+         */
+        constexpr void markForDestroy() noexcept(true)
+        { m_destroyed = true; }
+
         /*
          * @brief <BR>Get if node must be deleted
          */
