@@ -66,12 +66,14 @@ namespace ImFlow {
         ImGui::BeginGroup();
         if ( m_style->header_title_font != nullptr ) {
           ImGui::PushFont(m_style->header_title_font);
+          ImGui::PushFontSize(m_style->header_title_font_size);
         }
         
         ImGui::TextColored(m_style->header_title_color, "%s", m_title.c_str());
         ImGui::Spacing();
         
         if ( m_style->header_title_font != nullptr ) {
+          ImGui::PopFontSize();
           ImGui::PopFont();
         }
         ImGui::EndGroup();
