@@ -82,6 +82,14 @@ public:
     void          setPreDraw   ( std::function<void()> fn ) noexcept(true) { m_fnPreDraw  = fn; }
     void          setPostDraw  ( std::function<void()> fn ) noexcept(true) { m_fnPostDraw = fn; }
 private:
+    /* To call after Begin() */
+    inline void   setFontDensity() noexcept(true)
+    { 
+      if constexpr ( IMGUI_VERSION_NUM >= 19198 )
+      ImGui::SetFontRasterizerDensity(roundf(m_scale * 100.0f) / 100.0f); // Round density to two digits.
+    }
+
+private:
     ContainedContextConfig m_config;
 
     ImVec2 m_origin;
@@ -111,6 +119,7 @@ inline void ContainedContext::begin()
     ImGui::PushID(this);
     ImGui::PushStyleColor(ImGuiCol_ChildBg, m_config.color);
     ImGui::BeginChild("view_port", m_config.size, 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus );
+    setFontDensity();
     ImGui::PopStyleColor();
     m_pos = ImGui::GetWindowPos();
 
@@ -118,12 +127,7 @@ inline void ContainedContext::begin()
     m_origin = ImGui::GetCursorScreenPos();
     m_original_ctx = ImGui::GetCurrentContext();
     const ImGuiStyle& orig_style = ImGui::GetStyle();
-    if (!m_ctx) 
-    {
-      m_ctx = ImGui::CreateContext(ImGui::GetIO().Fonts);
-      m_ctx->IO.BackendFlags = m_original_ctx->IO.BackendFlags;
-      m_ctx->IO.ConfigFlags  = m_original_ctx->IO.ConfigFlags;
-    }
+    if (!m_ctx) m_ctx = ImGui::CreateContext(ImGui::GetIO().Fonts);
     ImGui::SetCurrentContext(m_ctx);
     ImGuiStyle& new_style = ImGui::GetStyle();
     new_style = orig_style;
@@ -132,6 +136,19 @@ inline void ContainedContext::begin()
 
     ImGui::GetIO().DisplaySize = m_size / m_scale;
     ImGui::GetIO().ConfigInputTrickleEventQueue = false;
+
+    /**
+     * Copy the ImGuiBackendFlags_RendererHasTextures flag as they need to be matching.
+     * This will also copy the ImGuiBackendFlags_RendererHasVtxOffset flag which will be more optimal in case large draw calls are being made.
+     * 
+     * @ocornut ref https://github.com/ocornut/imgui/issues/8680#issuecomment-2966871443
+     */
+    ImGui::GetIO().ConfigFlags = m_original_ctx->IO.ConfigFlags;
+    ImGui::GetIO().BackendFlags = m_original_ctx->IO.BackendFlags;
+#ifdef IMGUI_HAS_VIEWPORT
+    ImGui::GetIO().ConfigFlags &= ~(ImGuiConfigFlags_ViewportsEnable | ImGuiConfigFlags_DockingEnable);
+#endif
+    
     ImGui::NewFrame();
 
     if (!m_config.extra_window_wrapper)
@@ -151,6 +168,7 @@ inline void ContainedContext::begin()
     ImGui::Begin("viewport_container", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoMove
                                                 | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse
                                                 | ImGuiWindowFlags_NoBringToFrontOnFocus);
+    setFontDensity();
     ImGui::PopStyleVar();
 }
 
