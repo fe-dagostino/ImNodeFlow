@@ -118,7 +118,12 @@ inline void ContainedContext::begin()
     m_origin = ImGui::GetCursorScreenPos();
     m_original_ctx = ImGui::GetCurrentContext();
     const ImGuiStyle& orig_style = ImGui::GetStyle();
-    if (!m_ctx) m_ctx = ImGui::CreateContext(ImGui::GetIO().Fonts);
+    if (!m_ctx) 
+    {
+      m_ctx = ImGui::CreateContext(ImGui::GetIO().Fonts);
+      m_ctx->IO.BackendFlags = m_original_ctx->IO.BackendFlags;
+      m_ctx->IO.ConfigFlags  = m_original_ctx->IO.ConfigFlags;
+    }
     ImGui::SetCurrentContext(m_ctx);
     ImGuiStyle& new_style = ImGui::GetStyle();
     new_style = orig_style;
