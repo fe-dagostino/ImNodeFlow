@@ -152,13 +152,16 @@ namespace ImFlow
         NodeStyle() = delete;
         /***/
         constexpr NodeStyle(ImU32 header_bg, ImColor header_title_color, float radius) noexcept(true)
-          : header_title_font(nullptr), bg(IM_COL32(55,64,75,255)), header_bg(header_bg), header_title_color(header_title_color), 
+          : header_title_font(nullptr), header_title_font_size(20.0f), bg(IM_COL32(55,64,75,255)), header_bg(header_bg), 
+            header_title_color(header_title_color), 
             border_color( IM_COL32(30,38,41,140) ), border_selected_color(IM_COL32(170, 190, 205, 230)),
             padding(13.7f, 6.f, 13.7f, 2.f), radius(radius), border_thickness(-1.35f),
             border_selected_thickness(2.f)
         {}
         /// @brief Font used for the title.
         font_t  header_title_font;
+        /// @brief Font used to push font size.
+        float   header_title_font_size;
         /// @brief Body's background color
         ImU32   bg;
         /// @brief Header's background color
